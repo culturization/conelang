@@ -23,7 +23,7 @@ function_lookup:
 
 .next:
   ; rotate table
-  add  r13, 17
+  add  r13, dispatch_row_size
 
   ; cause a syntax error if we have reached the table boundary
   cmp  r13, (dispatch + DISPATCH_SIZE)
