@@ -8,6 +8,9 @@
 %define STDOUT 1
 %define STDERR 2
 
+%define MAX_FILE_SIZE 8096
+%define STACK_SIZE 1024
+
 %macro EXIT 1
   mov  rdi, %1 ; exit code
   mov  rax, SYS_EXIT
@@ -23,7 +26,7 @@
     
     mov  rdi, %2 ; fd
     mov  rsi, %%str ; buf
-    mov  rdx, %%end_str - %%msg ; count
+    mov  rdx, %%end_str - %%str ; count
     mov  rax, SYS_WRITE
     syscall
 %endmacro

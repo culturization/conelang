@@ -1,23 +1,26 @@
 %include 'macros.asm'
+%include 'dispatch.asm'
 %include 'errors.asm'
 %include 'token_lookup.asm'
+%include 'function_lookup.asm'
+%include 'functions.asm'
 
-%define CODE_MAX_SIZE 8096
+%define MAX_FILE_SIZE 8096
 %define STACK_SIZE 1024
 
-.section .bss
+section .bss
 code resb MAX_FILE_SIZE + 1
 stack resb STACK_SIZE
 
 global _start
 
-.section text
+section text
 _start:
   ; check how many arguments have been passed
   ; if there are no arguments, call an error
   pop  rax
   cmp  rax, 2
-  jl  no_args
+  jl  no_args_err
 
   ; ignore executable filename
   add  rsp, 8
@@ -31,7 +34,7 @@ _start:
 
   ; check for errors
   test  rax, rax
-  js  open_error
+  js  open_err
 
   ; read file
   mov  rdi, rax ; fd
@@ -57,3 +60,7 @@ parse:
   call  function_lookup
 
   jmp  parse
+
+; IN, OUT: nothing
+exit:
+  EXIT 0

@@ -10,7 +10,7 @@ token_lookup:
 
   ; exit on eof
   cmp  al, 0
-  je  eof
+  je  exit
 
   ; ignore spaces and line feeds
   cmp  al, ' '
@@ -45,4 +45,4 @@ token_lookup:
 
 .ignore_char:
   inc  rbx
-  jmp  read_token
+  jmp  .find_token_ptr
