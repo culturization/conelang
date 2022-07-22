@@ -58,6 +58,9 @@ parse:
 
   call  function_lookup
 
+  ; call the found function
+  call  r13
+
   jmp  parse
 
 ; IN, OUT: nothing

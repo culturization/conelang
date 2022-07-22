@@ -18,7 +18,7 @@ function_lookup:
   je  .next ; search for the right function next, if they are not equal
 
   ; return a pointer to the function if they are equal
-  add  r13, dispatch_row.ptr
+  mov  r13, [r13 + dispatch_row.ptr]
   ret
 
 .next:
