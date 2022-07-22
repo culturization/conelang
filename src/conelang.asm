@@ -1,17 +1,14 @@
 %include 'src/macros.asm'
 
-section .rodata
-%include 'src/dispatch.asm'
-
 section .bss
 code resb MAX_FILE_SIZE + 1
 stack resb STACK_SIZE
 
 section .text
 %include 'src/errors.asm'
-%include 'src/token_lookup.asm'
-%include 'src/function_lookup.asm'
-%include 'src/functions.asm'
+
+%include 'src/functions/functions.asm'
+%include 'src/parse/parse.asm'
 
 global _start
 _start:
@@ -46,21 +43,7 @@ _start:
   mov  rax, SYS_CLOSE
   syscall
 
-  ; prepare registers
-  mov  rbx, code
-  mov  r9, stack
-  cld ; clear direction flag
-
-; IN: rbx (code), r9 (stack)
-; OUT: nothing
-parse:
-  call  token_lookup
-
-  call  function_lookup
-
-  ; call the found function
-  call  r13
-
+  ; parse file
   jmp  parse
 
 ; IN, OUT: nothing

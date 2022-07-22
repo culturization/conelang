@@ -40,5 +40,10 @@ endstruc
 %endmacro
 
 GENERATE_DISPATCH \
-10, 'конус', cl_dup,\
-14, 'кашолка', cl_pop
+10, 'конус', cl_drop,\
+14, 'кашолка', cl_pick,\
+10, 'шишак', cl_inc,\
+12, 'бздило', cl_dec,\
+10, 'гнида', cl_add,\
+14, 'карапуз', cl_sub,\
+12, 'какащи', cl_syscall
