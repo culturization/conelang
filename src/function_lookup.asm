@@ -7,13 +7,13 @@ function_lookup:
 .loop:
   ; compare the length of the token and the length of the function name
   ; search for the right function next, if they are not equal
-  cmp  r12, (r13 + dispatch_row.name_len)
+  cmp  r12b, byte [r13 + dispatch_row.name_len]
   jne  .next
 
   ; if they are equal, compare the token itself and the function name
   mov  rcx, r12 ; token length
   mov  rsi, r11 ; token
-  lea  rdi, [r13 + dispatch_row.name] ; function name
+  mov  rdi, [r13 + dispatch_row.name] ; function name
   repe  cmpsb
   je  .next ; search for the right function next, if they are not equal
 

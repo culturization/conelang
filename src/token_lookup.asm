@@ -27,6 +27,8 @@ token_lookup:
   inc  rbx ; skip to the next char
   inc  r12
 
+  mov  al, [rbx]
+
   ; looking for the end of a token
   cmp  al, 0
   je  .end
@@ -36,6 +38,10 @@ token_lookup:
 
   cmp  al, `\n`
   je  .end
+
+  ; token length cannot be more than 255 bytes
+  cmp  r12, 255
+  je  syntax_err
 
   jmp  .count_len
 

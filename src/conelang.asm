@@ -1,20 +1,19 @@
-%include 'macros.asm'
-%include 'dispatch.asm'
-%include 'errors.asm'
-%include 'token_lookup.asm'
-%include 'function_lookup.asm'
-%include 'functions.asm'
+%include 'src/macros.asm'
 
-%define MAX_FILE_SIZE 8096
-%define STACK_SIZE 1024
+section .rodata
+%include 'src/dispatch.asm'
 
 section .bss
 code resb MAX_FILE_SIZE + 1
 stack resb STACK_SIZE
 
-global _start
+section .text
+%include 'src/errors.asm'
+%include 'src/token_lookup.asm'
+%include 'src/function_lookup.asm'
+%include 'src/functions.asm'
 
-section text
+global _start
 _start:
   ; check how many arguments have been passed
   ; if there are no arguments, call an error
